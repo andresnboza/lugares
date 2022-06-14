@@ -10,12 +10,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Lugares">
         <activity
-            android:name=".PrincipalActivity"
-            android:exported="true"
+            android:name=".Principal"
+            android:exported="false"
             android:label="@string/title_activity_principal"
             android:theme="@style/Theme.Lugares.NoActionBar" />
         <activity
-            android:name=".Principal"
+            android:name=".PrincipalActivity"
             android:exported="true"
             android:label="@string/title_activity_principal"
             android:theme="@style/Theme.Lugares.NoActionBar" />
