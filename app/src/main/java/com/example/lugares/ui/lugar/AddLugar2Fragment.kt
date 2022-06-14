@@ -12,7 +12,7 @@ import com.example.lugares.databinding.FragmentAddLugarBinding
 import com.example.lugares.model.Lugar
 import com.example.lugares.viewmodel.LugarViewModel
 
-class AddLugarFragment : Fragment() {
+class AddLugar2Fragment : Fragment() {
     private var _binding: FragmentAddLugarBinding? = null
     private val binding get() = _binding!!
 
@@ -48,5 +48,4 @@ class AddLugarFragment : Fragment() {
     private fun validation (nombre: String): Boolean {
         return !(nombre.isEmpty())
     }
-
 }

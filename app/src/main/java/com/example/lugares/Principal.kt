@@ -12,7 +12,6 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.lugares.databinding.ActivityPrincipalBinding
 import com.google.android.material.navigation.NavigationView
-import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
@@ -29,10 +28,10 @@ class Principal : AppCompatActivity() {
 
         setSupportActionBar(binding.appBarPrincipal.toolbar)
 
-        binding.appBarPrincipal.fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
-        }
+ //       binding.appBarPrincipal.setOnClickListener { view ->
+ //           Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+ //               .setAction("Action", null).show()
+ //       }
         val drawerLayout: DrawerLayout = binding.drawerLayout
         val navView: NavigationView = binding.navView
         val navController = findNavController(R.id.nav_host_fragment_content_principal)
