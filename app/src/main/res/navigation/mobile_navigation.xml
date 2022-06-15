@@ -35,4 +35,14 @@
             android:id="@+id/action_addLugarFragment_to_nav_lugar"
             app:destination="@id/nav_lugar" />
     </fragment>
+    <activity
+        android:id="@+id/mainActivity"
+        android:name="com.example.lugares.MainActivity"
+        android:label="activity_main"
+        tools:layout="@layout/activity_main" />
+    <activity
+        android:id="@+id/principal"
+        android:name="com.example.lugares.Principal"
+        android:label="app_bar_principal"
+        tools:layout="@layout/app_bar_principal" />
 </navigation>

@@ -1,6 +1,7 @@
 package com.example.lugares.ui.lugar
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.example.lugares.BuildConfig.DEBUG
 import com.example.lugares.R
 import com.example.lugares.databinding.FragmentAddLugarBinding
 import com.example.lugares.model.Lugar
@@ -48,7 +50,8 @@ class AddLugarFragment : Fragment() {
             val lugar = Lugar(0, nombre)
             lugarViewModel.addLugar(lugar)
             Toast.makeText(requireContext(), getString(R.string.msg_lugar_added), Toast.LENGTH_LONG).show()
-            findNavController().navigate(R.id.action_nav_lugar_to_addLugarFragment)
+
+            findNavController().navigate(R.id.action_addLugarFragment_to_nav_lugar)
         } else {
             Toast.makeText(requireContext(), getString(R.string.msg_error), Toast.LENGTH_LONG).show()
         }
