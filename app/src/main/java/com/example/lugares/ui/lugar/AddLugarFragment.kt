@@ -84,10 +84,9 @@ class AddLugarFragment : Fragment() {
         val nombre = binding.lugarName.text.toString()
 
         if(validation(nombre)) {
-            val lugar = Lugar(0, nombre)
+            val lugar = Lugar("", nombre)
             lugarViewModel.addLugar(lugar)
             Toast.makeText(requireContext(), getString(R.string.msg_lugar_added), Toast.LENGTH_LONG).show()
-
             findNavController().navigate(R.id.action_addLugarFragment_to_nav_lugar)
         } else {
             Toast.makeText(requireContext(), getString(R.string.msg_error), Toast.LENGTH_LONG).show()
