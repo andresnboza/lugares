@@ -151,7 +151,7 @@ class UpdateLugarFragment : Fragment() {
 
     private fun enviarWhatsApp() {
         //val telefono = binding.phone.text
-        val telefono = "11223344"
+        val telefono = "86381731"
 
         if (telefono.isNotEmpty()) {
 
