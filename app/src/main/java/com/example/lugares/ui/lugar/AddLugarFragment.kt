@@ -102,7 +102,7 @@ class AddLugarFragment : Fragment() {
 
             referencia.putFile(rutaLocal)
                 .addOnSuccessListener {
-                    referencia.downloadUrl.addOnSuccessListener { it ->
+                    referencia.downloadUrl.addOnSuccessListener {
                         val rutaAudio = it.toString()
                         subeImagen(rutaAudio)
                     }
@@ -187,7 +187,7 @@ class AddLugarFragment : Fragment() {
         if (nombre.isNotEmpty()) { //Si puedo crear un lugar
             val lugar= Lugar("",nombre,correo,telefono,web,latitud,
                 longitud,altura,rutaAudio,rutaImagen)
-            lugarViewModel.addLugar(lugar)
+            lugarViewModel.saveLugar(lugar)
             Toast.makeText(requireContext(),getString(R.string.msg_lugar_added),Toast.LENGTH_SHORT).show()
             findNavController().navigate(R.id.action_addLugarFragment_to_nav_lugar)
         } else {  //Mensaje de error...

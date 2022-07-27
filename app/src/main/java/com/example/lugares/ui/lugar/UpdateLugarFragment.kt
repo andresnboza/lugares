@@ -22,11 +22,6 @@ import com.example.lugares.viewmodel.LugarViewModel
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [AddLugarFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class UpdateLugarFragment : Fragment() {
 
     //Se deciben los parametros pasados por argumento
@@ -150,7 +145,7 @@ class UpdateLugarFragment : Fragment() {
             val lugar= Lugar(args.lugar.id,nombre,correo,telefono,web,0.0,
                 0.0,0.0,"","")
 
-            lugarViewModel.updateLugar(lugar)
+            lugarViewModel.saveLugar(lugar)
 
             Toast.makeText(requireContext(),getString(R.string.msg_lugar_update),Toast.LENGTH_SHORT).show()
             findNavController().navigate(R.id.action_updateLugarFragment_to_nav_lugar)

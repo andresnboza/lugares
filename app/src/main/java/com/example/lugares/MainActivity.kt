@@ -13,31 +13,67 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
 class MainActivity : AppCompatActivity() {
+
     private lateinit var auth: FirebaseAuth
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //setContentView(R.layout.activity_main)
+        //Se establece el enlace con la vista xml mediante el objeto binding
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Initializing firebase
+        //Se inicializa Firebase y se asigna el objeto para autenticación
         FirebaseApp.initializeApp(this)
         auth = Firebase.auth
 
-        // Assigning the methods to the buttons
-        binding.loginBtn.setOnClickListener{
-            login()
-        }
-        binding.registerBtn.setOnClickListener {
-            register()
-        }
+        binding.btRegister.setOnClickListener { haceRegistro() }
+        binding.btLogin.setOnClickListener { haceLogin() }
+
     }
 
-    private fun update(user: FirebaseUser?) {
-        if (user != null) {
-            val intent = Intent(this, Principal::class.java)
+    private fun haceRegistro() {
+        val email = binding.etCorreo.text.toString()
+        val clave = binding.etClave.text.toString()
+
+        //Se usa la función para crear un usuario por medio de correo y contraseña
+        auth.createUserWithEmailAndPassword(email,clave)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    val user = auth.currentUser
+                    actualiza(user)
+                } else {
+                    Toast.makeText(baseContext,
+                        getString(R.string.msg_fallo_registro),
+                        Toast.LENGTH_SHORT).show()
+                    actualiza(null)
+                }
+            }
+    }
+
+    private fun haceLogin() {
+        val email = binding.etCorreo.text.toString()
+        val clave = binding.etClave.text.toString()
+
+        //Se usa la función para crear un usuario por medio de correo y contraseña
+        auth.signInWithEmailAndPassword(email,clave)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    val user = auth.currentUser
+                    actualiza(user)
+                } else {
+                    Toast.makeText(baseContext,
+                        getString(R.string.msg_fallo_login),
+                        Toast.LENGTH_SHORT).show()
+                    actualiza(null)
+                }
+            }
+    }
+
+    private fun actualiza(user: FirebaseUser?) {
+        if (user!=null) {
+            // paso a la pantalla principal
+            val intent = Intent(this,Principal::class.java)
             startActivity(intent)
         }
     }
@@ -45,44 +81,7 @@ class MainActivity : AppCompatActivity() {
     public override fun onStart() {
         super.onStart()
         val user = auth.currentUser
-        update(user)
+        actualiza(user)
     }
 
-    private fun login() {
-        val email = binding.editTextTextEmailAddress.text.toString()
-        val password = binding.editTextTextPassword.text.toString()
-
-        auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this){
-                task ->
-            if (task.isSuccessful) {
-                Log.d("Login user", "Success")
-                val user = auth.currentUser
-                update(user)
-            } else {
-                Log.d("Login user", "Failed")
-                Toast.makeText(baseContext, "Fail", Toast.LENGTH_LONG).show()
-                update(null)
-            }
-        }
-    }
-
-    private fun register() {
-        val email = binding.editTextTextEmailAddress.text.toString()
-        val password = binding.editTextTextPassword.text.toString()
-
-        auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this){
-                task ->
-            if (task.isSuccessful) {
-                Log.d("Creating user", "Registration")
-                val user = auth.currentUser
-                update(user)
-            } else {
-                Log.d("Creating user", "Failed")
-                Toast.makeText(baseContext, "Fail", Toast.LENGTH_LONG).show()
-                update(null)
-            }
-        }
-
-
-    }
 }

@@ -3,6 +3,7 @@ package com.lugares.utiles
 import java.text.SimpleDateFormat
 import java.util.*
 
+
 class OtrosUtiles {
     companion object {
         fun getTempFile(prefijo:String) : String {

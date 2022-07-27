@@ -11,94 +11,55 @@ import com.google.firebase.firestore.FirebaseFirestoreSettings
 
 class LugarDao {
 
-    private var codigoUsuario: String
-    private var firestore: FirebaseFirestore
-    private var lugaresApp = "lugaresApp"
-    private var miColeccion = "misLugares"
+    private val coleccion1 = "lugaresApp"
+    private val usuario= Firebase.auth.currentUser?.email.toString()
+    private val coleccion2 = "misLugares"
+    private var firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
 
     init {
-        val usuario = Firebase.auth.currentUser?.email
-        codigoUsuario = "$usuario"
-
-        firestore = FirebaseFirestore.getInstance()
         firestore.firestoreSettings = FirebaseFirestoreSettings.Builder().build()
     }
 
-    fun getAlData(): MutableLiveData<List<Lugar>> {
+    fun getAllData() : MutableLiveData<List<Lugar>> {
         val listaLugares = MutableLiveData<List<Lugar>>()
-        firestore
-            .collection(lugaresApp)
-            .document(codigoUsuario)
-            .collection(miColeccion)
-            .addSnapshotListener{ snapshot, e ->
-                if (e != null) {
+        firestore.collection(coleccion1).document(usuario).collection(coleccion2)
+            .addSnapshotListener{ instantanea, e ->
+                if (e != null) {  //Se valida si se generó algún error en la captura de los documentos
                     return@addSnapshotListener
                 }
-                if (snapshot != null) {
+                if (instantanea != null) {  //Si hay información recuperada...
+                    //Recorro la instantanea (documentos) para crear la lista de lugares
                     val lista = ArrayList<Lugar>()
-                    val lugares = snapshot.documents
-
-                    lugares.forEach {
+                    instantanea.documents.forEach {
                         val lugar = it.toObject(Lugar::class.java)
-                        if (lugar != null) {
-                            lista.add(lugar)
-                        }
+                        if (lugar!=null) { lista.add(lugar) }
                     }
-
-                    listaLugares.value = lista
+                    listaLugares.value=lista
                 }
             }
         return listaLugares
     }
 
-    fun addLugar(lugar: Lugar) {
-        var document: DocumentReference
-
-        if (lugar.id.isEmpty()) {
-            // Es un lugar nuevo / documento nuevo
-            document = firestore
-                .collection(lugaresApp)
-                .document(codigoUsuario)
-                .collection(miColeccion)
-                .document()
-            lugar.id = document.id
-        } else {
-            document = firestore
-                .collection(lugaresApp)
-                .document(codigoUsuario)
-                .collection(miColeccion)
-                .document(lugar.id)
+    fun saveLugar(lugar: Lugar) {
+        val documento: DocumentReference
+        if (lugar.id.isEmpty()) {  //Si id no tiene valor entonces es un documento nuevo
+            documento = firestore.collection(coleccion1).document(usuario).collection(coleccion2).document()
+            lugar.id = documento.id
+        } else {  //si el id tiene valor... entonces el documento existe... y recupero la info de él
+            documento = firestore.collection(coleccion1).document(usuario)
+                .collection(coleccion2).document(lugar.id)
         }
-
-        val set = document.set(lugar)
-
-        set
-            .addOnSuccessListener {
-                Log.d("AddLugar", "Lugar Agregado - " + lugar.id)
-            }
-            .addOnCanceledListener {
-                Log.d("AddLugar", "Lugar NO Agregado - " + lugar.id)
-            }
-    }
-
-    fun updateLugar(lugar: Lugar) {
-        addLugar(lugar)
+        documento.set(lugar)
+            .addOnSuccessListener { Log.d("saveLugar","Se creó o modificó un lugar") }
+            .addOnCanceledListener { Log.e("saveLugar","NO se creó o modificó un lugar") }
     }
 
     fun deleteLugar(lugar: Lugar) {
-        if (lugar.id.isNotEmpty()) {
-            firestore
-                .collection(lugaresApp)
-                .document(codigoUsuario)
-                .collection(miColeccion)
-                .document(lugar.id)
-                .delete()
-                .addOnSuccessListener {
-                    Log.d("DeleteLugar", "Lugar Eliminado - " + lugar.id)
-                }
-                .addOnCanceledListener {
-                    Log.d("DeleteLugar", "Lugar NO Eliminado - " + lugar.id)
-                }
+        if (lugar.id.isNotEmpty()) {  //Si el id tiene valor... entonces podemos eliminar el lugar... porque existe...
+            firestore.collection(coleccion1).document(usuario)
+                .collection(coleccion2).document(lugar.id).delete()
+                .addOnSuccessListener { Log.d("deleteLugar","Se elimintó un lugar") }
+                .addOnCanceledListener { Log.e("deleteLugar","NO se eliminó un lugar") }
         }
     }
 }

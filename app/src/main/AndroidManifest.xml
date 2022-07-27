@@ -2,14 +2,16 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.lugares">
 
-    <!-- PERMISOS -->
+    <!-- Este es para decirle al android que esta app requiere acceso a hacer llamadas-->
     <uses-permission android:name="android.permission.CALL_PHONE"/>
+
+    <!-- Estos permisos se requieren para la geolocalzación -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 
     <!-- Microfono y Camara -->
     <uses-permission android:name="android.permission.RECORD_AUDIO"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" xmlns:tools="ScopedStorage" />
 
     <application
         android:allowBackup="true"
@@ -33,7 +35,8 @@
             </intent-filter>
         </activity>
 
-
+        <!-- Esto se requiere para buscar las imagenes capturadas de la cámara -->
+        <!-- ojo el archivo llamado file_paths en la carpeta xml -->
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.provider"
@@ -41,7 +44,7 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths" />
+                android:resource="@xml/file_paths"/>
         </provider>
 
     </application>
