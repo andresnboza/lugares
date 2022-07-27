@@ -5,9 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import com.example.lugares.model.Lugar
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.ktx.Firebase
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreSettings
-import com.google.firebase.ktx.Firebase
 
 class LugarDao {
 
