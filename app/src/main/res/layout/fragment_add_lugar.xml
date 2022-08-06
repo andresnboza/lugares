@@ -140,72 +140,29 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
-                <ImageButton
-                    android:id="@+id/bt_accion"
-                    android:layout_width="wrap_content"
-                    android:layout_height="50dp"
-                    android:layout_weight="1"
-                    android:contentDescription="@string/todo"
-                    android:src="@drawable/ic_mic"
-                    tools:ignore="DuplicateSpeakableTextCheck" />
+                <ImageView
+                    android:id="@+id/image_preview"
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"
+                    android:scaleType="centerCrop"
+                    android:background="@color/purple_700" />
 
-                <ImageButton
-                    android:id="@+id/bt_play"
-                    android:layout_width="wrap_content"
-                    android:layout_height="50dp"
-                    android:layout_weight="1"
-                    android:contentDescription="@string/todo"
-                    android:src="@drawable/ic_play" />
+                <Button
+                    android:id="@+id/btn_choose_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="Choose image" />
 
-                <ImageButton
-                    android:id="@+id/bt_delete"
-                    android:layout_width="wrap_content"
-                    android:layout_height="50dp"
-                    android:layout_weight="1"
-                    android:contentDescription="@string/todo"
-                    android:src="@drawable/ic_delete" />
+                <Button
+                    android:id="@+id/btn_upload_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Upload image" />
+
             </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <ImageButton
-                    android:id="@+id/bt_photo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="50dp"
-                    android:layout_weight="1"
-                    android:contentDescription="@string/todo"
-                    android:src="@drawable/ic_photo" />
-
-                <ImageButton
-                    android:id="@+id/bt_rota_l"
-                    android:layout_width="wrap_content"
-                    android:layout_height="50dp"
-                    android:layout_weight="1"
-                    android:contentDescription="@string/todo"
-                    android:src="@drawable/ic_rotate_l" />
-
-                <ImageButton
-                    android:id="@+id/bt_rota_r"
-                    android:layout_width="wrap_content"
-                    android:layout_height="50dp"
-                    android:layout_weight="1"
-                    android:contentDescription="@string/todo"
-                    android:src="@drawable/ic_rotate_r" />
-            </LinearLayout>
-
-            <ImageView
-                android:id="@+id/imagen"
-                android:layout_width="match_parent"
-                android:layout_height="400dp"
-                android:contentDescription="@string/msg_imagen"
-                android:scaleType="centerInside"
-                tools:ignore="ImageContrastCheck"
-                tools:src="@tools:sample/backgrounds/scenic" />
 
         </LinearLayout>
     </ScrollView>

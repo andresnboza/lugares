@@ -100,21 +100,14 @@
                 android:scaleType="fitCenter"
                 android:src="@drawable/web_logo" />
 
-            <ImageButton
-                android:id="@+id/bt_location"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:contentDescription="@string/todo"
-                android:src="@drawable/ic_location" />
+<!--            <ImageButton-->
+<!--                android:id="@+id/bt_location"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_weight="1"-->
+<!--                android:contentDescription="@string/todo"-->
+<!--                android:src="@drawable/ic_location" />-->
 
-            <ImageButton
-                android:id="@+id/btPlay"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:contentDescription="@string/msgEscucharAudio"
-                android:src="@drawable/ic_play" />
         </LinearLayout>
 
         <TableLayout
@@ -193,7 +186,7 @@
         <ImageView
             android:id="@+id/imagen"
             android:layout_width="match_parent"
-            android:layout_height="400dp"
+            android:layout_height="250dp"
             android:contentDescription="@string/msg_imagen"
             android:scaleType="centerInside"
             tools:ignore="ImageContrastCheck"

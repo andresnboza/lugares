@@ -12,6 +12,12 @@
     <!-- Microfono y Camara -->
     <uses-permission android:name="android.permission.RECORD_AUDIO"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" xmlns:tools="ScopedStorage" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
+    <!-- Internet Permission -->
+    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+
+
 
     <application
         android:allowBackup="true"

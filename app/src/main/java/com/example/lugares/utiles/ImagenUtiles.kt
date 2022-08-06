@@ -46,7 +46,7 @@ class ImagenUtiles (
     }
 
     private fun createImageFile(): File {
-        val archivo=OtrosUtiles.getTempFile("imagen_")
+        val archivo = OtrosUtiles.getTempFile("imagen_")
         val storageDir: File? =
             contexto.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
         val image= File.createTempFile(
@@ -61,6 +61,7 @@ class ImagenUtiles (
         imagen.setImageBitmap(
             BitmapFactory.decodeFile(imagenFile.absolutePath))
     }
+
 }
 
 
