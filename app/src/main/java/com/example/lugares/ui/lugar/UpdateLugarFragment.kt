@@ -48,6 +48,8 @@ class UpdateLugarFragment : Fragment() {
         binding.tvLatitud.text=args.lugar.latitud.toString()
         binding.tvLongitud.text=args.lugar.longitud.toString()
 
+        binding.imagePreview.setImageURI(Uri.parse(args.lugar.rutaImagen))
+
         binding.btUpdateLugar.setOnClickListener { updateLugar() }
 
         binding.btEmail.setOnClickListener { escribirCorreo() }
@@ -141,9 +143,12 @@ class UpdateLugarFragment : Fragment() {
         val correo=binding.etCorreo.text.toString()
         val telefono=binding.etTelefono.text.toString()
         val web=binding.etWeb.text.toString()
+
+        //val imageUri = binding.image_preview
+
         if (nombre.isNotEmpty()) { //Si puedo crear un lugar
             val lugar= Lugar(args.lugar.id,nombre,correo,telefono,web,0.0,
-                0.0,0.0,"","")
+                0.0,0.0,"",null)
 
             lugarViewModel.saveLugar(lugar)
 

@@ -39,7 +39,6 @@ class LugarFragment : Fragment() {
         }
 
 
-
         return binding.root
     }
     override fun onDestroyView() {

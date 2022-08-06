@@ -48,9 +48,8 @@ class AddLugarFragment : Fragment() {
     private var resultCode: Int = 0
     private val pickImage = 100
     private var imageUri: Uri? = null
+    private var imageString: String = ""
     private val REQUEST_CODE = 100
-
-    private var rutaImagen = ""
 
 
     override fun onCreateView(
@@ -72,7 +71,7 @@ class AddLugarFragment : Fragment() {
             binding.progressBar.visibility = ProgressBar.VISIBLE
             binding.msgMensaje.text = getString(R.string.msg_subiendo_audio)
             binding.msgMensaje.visibility = TextView.VISIBLE
-            addLugar(this.rutaImagen)
+            addLugar()
         }
 
         binding.btnChooseImage.setOnClickListener {
@@ -106,20 +105,19 @@ class AddLugarFragment : Fragment() {
         //Log.d("TAG", data?.data.toString())
         //Log.d("TAG","###################")
         this.imageUri = data?.data
-        this.rutaImagen = this.imageUri.toString()
+        this.imageString = this.imageUri.toString()
         binding.imagePreview.setImageURI(this.imageUri)
     }
 
     private fun uploadImage(){
         if(this.imageUri != null){
-            this.rutaImagen = "myImages/" + UUID.randomUUID().toString()
-            val ref = storageReference?.child(this.rutaImagen)
+            val rutaImagen = "myImages/" + UUID.randomUUID().toString()
+            val ref = storageReference?.child(rutaImagen)
             val uploadTask = ref?.putFile(filePath!!)
         }else{
             Toast.makeText(requireContext(), "Please Upload an Image", Toast.LENGTH_SHORT).show()
         }
     }
-
 
     private fun ubicaGPS() {
         val ubicacion: FusedLocationProviderClient =
@@ -152,7 +150,7 @@ class AddLugarFragment : Fragment() {
 
     }
 
-    private fun addLugar(rutaImagen:String) {
+    private fun addLugar() {
         val nombre=binding.etNombre.text.toString()
         val correo=binding.etCorreo.text.toString()
         val telefono=binding.etTelefono.text.toString()
@@ -163,7 +161,7 @@ class AddLugarFragment : Fragment() {
 
         if (nombre.isNotEmpty()) { //Si puedo crear un lugar
             val lugar= Lugar("",nombre,correo,telefono,web,latitud,
-                longitud,altura,"",rutaImagen)
+                longitud,altura,"",this.imageString)
             lugarViewModel.saveLugar(lugar)
             Toast.makeText(requireContext(),getString(R.string.msg_lugar_added),Toast.LENGTH_SHORT).show()
             findNavController().navigate(R.id.action_addLugarFragment_to_nav_lugar)
