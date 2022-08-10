@@ -3,9 +3,9 @@ package com.example.lugares.ui.lugar
 import android.Manifest
 import android.app.Activity
 import android.app.Activity.RESULT_OK
+import android.app.ProgressDialog
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
 import android.location.Location
 import android.net.Uri
 import android.os.Bundle
@@ -28,13 +28,12 @@ import com.google.android.gms.location.LocationServices
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.lugares.utiles.ImagenUtiles
-import android.util.Log
+import java.text.SimpleDateFormat
 import java.util.*
 
-
 class AddLugarFragment : Fragment() {
+    private var progressDialog: ProgressDialog? = null
     private val PICK_IMAGE_REQUEST = 71
-    private var filePath: Uri? = null
     private var firebaseStore: FirebaseStorage? = null
     private var storageReference: StorageReference? = null
 
@@ -44,13 +43,8 @@ class AddLugarFragment : Fragment() {
     private lateinit var imagenUtiles: ImagenUtiles
     private lateinit var tomarFotoActivity: ActivityResultLauncher<Intent>
 
-    private var requestCode: Int = 0
-    private var resultCode: Int = 0
-    private val pickImage = 100
     private var imageUri: Uri? = null
     private var imageString: String = ""
-    private val REQUEST_CODE = 100
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -65,7 +59,6 @@ class AddLugarFragment : Fragment() {
 
         firebaseStore = FirebaseStorage.getInstance()
         storageReference = FirebaseStorage.getInstance().reference
-
 
         binding.btAgregar.setOnClickListener {
             binding.progressBar.visibility = ProgressBar.VISIBLE
@@ -100,22 +93,40 @@ class AddLugarFragment : Fragment() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        //Log.d("TAG","###################")
-        //Log.d("TAG", data?.data.toString())
-        //Log.d("TAG","###################")
         this.imageUri = data?.data
-        this.imageString = this.imageUri.toString()
         binding.imagePreview.setImageURI(this.imageUri)
     }
 
-    private fun uploadImage(){
-        if(this.imageUri != null){
-            val rutaImagen = "myImages/" + UUID.randomUUID().toString()
-            val ref = storageReference?.child(rutaImagen)
-            val uploadTask = ref?.putFile(filePath!!)
-        }else{
-            Toast.makeText(requireContext(), "Please Upload an Image", Toast.LENGTH_SHORT).show()
+    private fun toggleDialogBar(show: Boolean) {
+        if (this.progressDialog != null && this.progressDialog!!.isShowing) {
+            this.progressDialog!!.dismiss()
+        } else {
+            this.progressDialog = ProgressDialog(this.context)
+            this.progressDialog!!.setMessage("Uploading file ...")
+            this.progressDialog!!.setCancelable(false)
+            this.progressDialog!!.show()
+        }
+    }
+
+    private fun uploadImage() {
+        val name = binding.etNombre.toString()
+        this.toggleDialogBar(true)
+
+        val formatter = SimpleDateFormat("yyyy_MM_dd_HH_mm_ss", Locale.getDefault())
+        val now = Date()
+        val fileName = "_" + formatter.format(now)
+        val storageReference = FirebaseStorage.getInstance().getReference("images/$name$fileName")
+
+        this.toggleDialogBar(false)
+        this.imageUri?.let {
+            storageReference
+                .putFile(it)
+                .addOnFailureListener {
+                    Toast.makeText(requireContext(),getString(R.string.fail_save),Toast.LENGTH_SHORT).show()
+                }.addOnSuccessListener { taskSnapshot ->
+                    binding.imagePreview.setImageURI(null)
+                    Toast.makeText(requireContext(),getString(R.string.success_save),Toast.LENGTH_SHORT).show()
+                }
         }
     }
 

@@ -65,6 +65,8 @@
     <string name="action_signout">Sign Out</string>
     <string name="menu_delete">Delete</string>
     <string name="update_place">update</string>
+    <string name="success_save">Se guardo la imagen en Firebase con exito!!</string>
+    <string name="fail_save">No se pudo guardar la imagen con exito</string>
 
 
 </resources>
