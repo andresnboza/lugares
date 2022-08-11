@@ -3,7 +3,6 @@ package com.example.lugares
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.navigation.NavigationView
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -29,10 +28,6 @@ class Principal : AppCompatActivity() {
 
         setSupportActionBar(binding.appBarPrincipal.toolbar)
 
-//        binding.appBarPrincipal.fab.setOnClickListener { view ->
-//            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                .setAction("Action", null).show()
-//        }
         val drawerLayout: DrawerLayout = binding.drawerLayout
         val navView: NavigationView = binding.navView
         val navController = findNavController(R.id.nav_host_fragment_content_principal)
@@ -47,6 +42,17 @@ class Principal : AppCompatActivity() {
         navView.setupWithNavController(navController)
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_signOut -> {
+                Firebase.auth.signOut()
+                finish()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.principal, menu)
@@ -56,15 +62,5 @@ class Principal : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_content_principal)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.action_signOut -> {
-                Firebase.auth.signOut()
-                finish()
-                true
-            } else -> super.onOptionsItemSelected(item)
-        }
     }
 }
